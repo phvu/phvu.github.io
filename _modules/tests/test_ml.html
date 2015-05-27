@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tests.test_ml &mdash; PyClient 0.3.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.3.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="PyClient 0.3.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">PyClient 0.3.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for tests.test_ml</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">test_base</span> <span class="kn">import</span> <span class="n">BaseTestNew</span>
+<span class="kn">from</span> <span class="nn">adatao</span> <span class="kn">import</span> <span class="n">ml</span>
+
+<div class="viewcode-block" id="PropertyTest"><a class="viewcode-back" href="../../tests.html#tests.test_ml.PropertyTest">[docs]</a><span class="k">class</span> <span class="nc">PropertyTest</span><span class="p">(</span><span class="n">BaseTestNew</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test adatao.ml</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="PropertyTest.setUp"><a class="viewcode-back" href="../../tests.html#tests.test_ml.PropertyTest.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PropertyTest</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setUp</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loadMtCars</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="PropertyTest.testClustering"><a class="viewcode-back" href="../../tests.html#tests.test_ml.PropertyTest.testClustering">[docs]</a>    <span class="k">def</span> <span class="nf">testClustering</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">kmeans_model</span> <span class="o">=</span> <span class="n">ml</span><span class="o">.</span><span class="n">clustering</span><span class="o">.</span><span class="n">kmeans</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;cyl&#39;</span><span class="p">,</span> <span class="s">&#39;mpg&#39;</span><span class="p">],</span> <span class="n">num_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                                            <span class="n">max_iterations</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="s">&#39;cosine&#39;</span><span class="p">)</span>
+        <span class="n">ddf2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[[</span><span class="s">&#39;cyl&#39;</span><span class="p">,</span> <span class="s">&#39;mpg&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">result</span>
+        <span class="n">ddf3</span> <span class="o">=</span> <span class="n">kmeans_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">ddf2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ddf3</span><span class="o">.</span><span class="n">cols</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ddf3</span><span class="o">.</span><span class="n">colnames</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s">&#39;yPredict&#39;</span><span class="p">)</span>
+
+        <span class="n">ddf4</span> <span class="o">=</span> <span class="n">ml</span><span class="o">.</span><span class="n">clustering</span><span class="o">.</span><span class="n">silhouette</span><span class="p">(</span><span class="n">ddf3</span><span class="p">,</span> <span class="s">&#39;yPredict&#39;</span><span class="p">,</span> <span class="s">&#39;cosine&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ddf4</span><span class="o">.</span><span class="n">cols</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ddf4</span><span class="o">.</span><span class="n">colnames</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">&#39;silhouette&#39;</span><span class="p">)</span>
+        <span class="n">avg_silhouette</span> <span class="o">=</span> <span class="n">ddf4</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="mf">0.752792</span><span class="p">,</span> <span class="n">avg_silhouette</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</div></div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">PyClient 0.3.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Adatao.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

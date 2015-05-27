@@ -1,0 +1,278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>adatao.ml package &mdash; PyClient 0.3.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.3.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyClient 0.3.0 documentation" href="index.html" />
+    <link rel="up" title="adatao package" href="adatao.html" />
+    <link rel="next" title="adatao.viz package" href="adatao.viz.html" />
+    <link rel="prev" title="adatao.core package" href="adatao.core.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="adatao.viz.html" title="adatao.viz package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="adatao.core.html" title="adatao.core package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">PyClient 0.3.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="adatao.html" accesskey="U">adatao package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="adatao-ml-package">
+<h1>adatao.ml package<a class="headerlink" href="#adatao-ml-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-adatao.ml.clustering">
+<span id="adatao-ml-clustering-module"></span><h2>adatao.ml.clustering module<a class="headerlink" href="#module-adatao.ml.clustering" title="Permalink to this headline">¶</a></h2>
+<p>Created on Jan 15, 2014</p>
+<p>&#64;author: nhanvlc</p>
+<dl class="function">
+<dt id="adatao.ml.clustering.kmeans">
+<code class="descclassname">adatao.ml.clustering.</code><code class="descname">kmeans</code><span class="sig-paren">(</span><em>data</em>, <em>cols=None</em>, <em>num_clusters=2</em>, <em>max_iterations=10</em>, <em>distance='euclidean'</em>, <em>runs=1</em>, <em>init_steps=5</em>, <em>epsilon=1e-05</em>, <em>seed=42</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/ml/clustering.html#kmeans"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.ml.clustering.kmeans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train a kmeans model on a DDF
+:param data: DDF
+:param cols:
+:param num_clusters:
+:param max_iterations:
+:param distance:
+:param runs:
+:param init_steps:
+:param epsilon:
+:param seed:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="adatao.ml.clustering.silhouette">
+<code class="descclassname">adatao.ml.clustering.</code><code class="descname">silhouette</code><span class="sig-paren">(</span><em>data</em>, <em>label_column</em>, <em>distance='euclidean'</em>, <em>sample_fraction=1.0</em>, <em>seed=42</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/ml/clustering.html#silhouette"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.ml.clustering.silhouette" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute Silhouette index of the result of clustering
+:param data:
+:param label_column:
+:param distance:
+:param sample_fraction:
+:param seed:
+:return:</p>
+</dd></dl>
+
+</div>
+<div class="section" id="adatao-ml-lm-module">
+<h2>adatao.ml.lm module<a class="headerlink" href="#adatao-ml-lm-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-adatao.ml.models">
+<span id="adatao-ml-models-module"></span><h2>adatao.ml.models module<a class="headerlink" href="#module-adatao.ml.models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="adatao.ml.models.ClusteringModel">
+<em class="property">class </em><code class="descclassname">adatao.ml.models.</code><code class="descname">ClusteringModel</code><span class="sig-paren">(</span><em>model_id</em>, <em>cols</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/ml/models.html#ClusteringModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.ml.models.ClusteringModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#adatao.ml.models.Model" title="adatao.ml.models.Model"><code class="xref py py-class docutils literal"><span class="pre">adatao.ml.models.Model</span></code></a></p>
+<dl class="method">
+<dt id="adatao.ml.models.ClusteringModel.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>data</em>, <em>cols=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/ml/models.html#ClusteringModel.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.ml.models.ClusteringModel.predict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="adatao.ml.models.KMeansModel">
+<em class="property">class </em><code class="descclassname">adatao.ml.models.</code><code class="descname">KMeansModel</code><span class="sig-paren">(</span><em>model_name</em>, <em>columns</em>, <em>raw_model</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/ml/models.html#KMeansModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.ml.models.KMeansModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#adatao.ml.models.ClusteringModel" title="adatao.ml.models.ClusteringModel"><code class="xref py py-class docutils literal"><span class="pre">adatao.ml.models.ClusteringModel</span></code></a></p>
+<dl class="attribute">
+<dt id="adatao.ml.models.KMeansModel.centers">
+<code class="descname">centers</code><a class="headerlink" href="#adatao.ml.models.KMeansModel.centers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="adatao.ml.models.Model">
+<em class="property">class </em><code class="descclassname">adatao.ml.models.</code><code class="descname">Model</code><span class="sig-paren">(</span><em>model_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/ml/models.html#Model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.ml.models.Model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="adatao.ml.models.Model.model_id">
+<code class="descname">model_id</code><a class="headerlink" href="#adatao.ml.models.Model.model_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="adatao.ml.models.Model.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>data</em>, <em>cols=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/ml/models.html#Model.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.ml.models.Model.predict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="adatao.ml.models.ModelFactory">
+<em class="property">class </em><code class="descclassname">adatao.ml.models.</code><code class="descname">ModelFactory</code><a class="reference internal" href="_modules/adatao/ml/models.html#ModelFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.ml.models.ModelFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="staticmethod">
+<dt id="adatao.ml.models.ModelFactory.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>json_data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/ml/models.html#ModelFactory.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.ml.models.ModelFactory.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>parse model from com.adatao.ddf.ml.Model&#8217;s json
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-adatao.ml.scorer">
+<span id="adatao-ml-scorer-module"></span><h2>adatao.ml.scorer module<a class="headerlink" href="#module-adatao.ml.scorer" title="Permalink to this headline">¶</a></h2>
+<p>Created on Jan 24, 2014</p>
+<p>&#64;author: nhanvlc</p>
+<dl class="class">
+<dt id="adatao.ml.scorer.R2">
+<em class="property">class </em><code class="descclassname">adatao.ml.scorer.</code><code class="descname">R2</code><a class="reference internal" href="_modules/adatao/ml/scorer.html#R2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.ml.scorer.R2" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="staticmethod">
+<dt id="adatao.ml.scorer.R2.score">
+<em class="property">static </em><code class="descname">score</code><span class="sig-paren">(</span><em>model</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/ml/scorer.html#R2.score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.ml.scorer.R2.score" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-adatao.ml.validation">
+<span id="adatao-ml-validation-module"></span><h2>adatao.ml.validation module<a class="headerlink" href="#module-adatao.ml.validation" title="Permalink to this headline">¶</a></h2>
+<p>Created on Jan 21, 2014</p>
+<p>&#64;author: nhanvlc</p>
+<dl class="class">
+<dt id="adatao.ml.validation.CrossValidation">
+<em class="property">class </em><code class="descclassname">adatao.ml.validation.</code><code class="descname">CrossValidation</code><a class="reference internal" href="_modules/adatao/ml/validation.html#CrossValidation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.ml.validation.CrossValidation" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="staticmethod">
+<dt id="adatao.ml.validation.CrossValidation.kFoldSplit">
+<em class="property">static </em><code class="descname">kFoldSplit</code><span class="sig-paren">(</span><em>data</em>, <em>k</em>, <em>seed</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/ml/validation.html#CrossValidation.kFoldSplit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.ml.validation.CrossValidation.kFoldSplit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="adatao.ml.validation.CrossValidation.kFoldWithScorer">
+<em class="property">static </em><code class="descname">kFoldWithScorer</code><span class="sig-paren">(</span><em>data</em>, <em>trainer</em>, <em>params</em>, <em>scorer</em>, <em>k</em>, <em>seed</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/ml/validation.html#CrossValidation.kFoldWithScorer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.ml.validation.CrossValidation.kFoldWithScorer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="adatao.ml.validation.CrossValidation.randomSubsamplingSplit">
+<em class="property">static </em><code class="descname">randomSubsamplingSplit</code><span class="sig-paren">(</span><em>data</em>, <em>numrs</em>, <em>trainingSize</em>, <em>seed</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/ml/validation.html#CrossValidation.randomSubsamplingSplit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.ml.validation.CrossValidation.randomSubsamplingSplit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="adatao.ml.validation.CrossValidation.randomSubsamplingWithScorer">
+<em class="property">static </em><code class="descname">randomSubsamplingWithScorer</code><span class="sig-paren">(</span><em>data</em>, <em>trainer</em>, <em>params</em>, <em>scorer</em>, <em>numrs</em>, <em>trainingSize</em>, <em>seed</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/ml/validation.html#CrossValidation.randomSubsamplingWithScorer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.ml.validation.CrossValidation.randomSubsamplingWithScorer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-adatao.ml">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-adatao.ml" title="Permalink to this headline">¶</a></h2>
+<p>Adatao&#8217;s ML package</p>
+<p>This sub-package implements a Python interface for the Machine Learning part of PE.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">adatao.ml package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-adatao.ml.clustering">adatao.ml.clustering module</a></li>
+<li><a class="reference internal" href="#adatao-ml-lm-module">adatao.ml.lm module</a></li>
+<li><a class="reference internal" href="#module-adatao.ml.models">adatao.ml.models module</a></li>
+<li><a class="reference internal" href="#module-adatao.ml.scorer">adatao.ml.scorer module</a></li>
+<li><a class="reference internal" href="#module-adatao.ml.validation">adatao.ml.validation module</a></li>
+<li><a class="reference internal" href="#module-adatao.ml">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="adatao.core.html"
+                        title="previous chapter">adatao.core package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="adatao.viz.html"
+                        title="next chapter">adatao.viz package</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/adatao.ml.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="adatao.viz.html" title="adatao.viz package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="adatao.core.html" title="adatao.core package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">PyClient 0.3.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="adatao.html" >adatao package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Adatao.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

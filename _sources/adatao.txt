@@ -1,0 +1,19 @@
+adatao package
+==============
+
+Subpackages
+-----------
+
+.. toctree::
+
+    adatao.core
+    adatao.ml
+    adatao.viz
+
+Module contents
+---------------
+
+.. automodule:: adatao
+    :members:
+    :undoc-members:
+    :show-inheritance:

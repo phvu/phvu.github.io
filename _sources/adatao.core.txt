@@ -1,0 +1,70 @@
+adatao.core package
+===================
+
+Submodules
+----------
+
+adatao.core.client module
+-------------------------
+
+.. automodule:: adatao.core.client
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+adatao.core.dataframe module
+----------------------------
+
+.. automodule:: adatao.core.dataframe
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+adatao.core.errors module
+-------------------------
+
+.. automodule:: adatao.core.errors
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+adatao.core.filter_expression_parser module
+-------------------------------------------
+
+.. automodule:: adatao.core.filter_expression_parser
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+adatao.core.session module
+--------------------------
+
+.. automodule:: adatao.core.session
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+adatao.core.subset_expression module
+------------------------------------
+
+.. automodule:: adatao.core.subset_expression
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+adatao.core.util module
+-----------------------
+
+.. automodule:: adatao.core.util
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: adatao.core
+    :members:
+    :undoc-members:
+    :show-inheritance:

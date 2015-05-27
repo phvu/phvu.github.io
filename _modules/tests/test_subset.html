@@ -1,0 +1,240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tests.test_subset &mdash; PyClient 0.3.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.3.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="PyClient 0.3.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">PyClient 0.3.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for tests.test_subset</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">test_base</span> <span class="kn">import</span> <span class="n">BaseTestNew</span>
+<span class="kn">import</span> <span class="nn">adatao</span>
+
+
+<div class="viewcode-block" id="SubsetTest"><a class="viewcode-back" href="../../tests.html#tests.test_subset.SubsetTest">[docs]</a><span class="k">class</span> <span class="nc">SubsetTest</span><span class="p">(</span><span class="n">BaseTestNew</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test subset expressions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># TODO: This test needs some asserts to check the returned DDF values</span>
+
+<div class="viewcode-block" id="SubsetTest.setUp"><a class="viewcode-back" href="../../tests.html#tests.test_subset.SubsetTest.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SubsetTest</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setUp</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loadMtCars</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="SubsetTest.testSubset"><a class="viewcode-back" href="../../tests.html#tests.test_subset.SubsetTest.testSubset">[docs]</a>    <span class="k">def</span> <span class="nf">testSubset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">n_rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="o">.</span><span class="n">rows</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="o">.</span><span class="n">colnames</span><span class="p">[:]</span>
+
+        <span class="n">df1_exp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[:]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">df1_exp</span><span class="p">,</span> <span class="n">adatao</span><span class="o">.</span><span class="n">SubsetExpression</span><span class="p">)</span>
+        <span class="n">df1</span> <span class="o">=</span> <span class="n">df1_exp</span><span class="o">.</span><span class="n">result</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">adatao</span><span class="o">.</span><span class="n">DistributedDataFrame</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df1</span><span class="o">.</span><span class="n">rows</span><span class="p">,</span> <span class="n">n_rows</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df1</span><span class="o">.</span><span class="n">cols</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="o">.</span><span class="n">cols</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertItemsEqual</span><span class="p">(</span><span class="n">columns</span><span class="p">,</span> <span class="n">df1</span><span class="o">.</span><span class="n">colnames</span><span class="p">)</span>
+
+        <span class="n">df2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">result</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df2</span><span class="o">.</span><span class="n">rows</span><span class="p">,</span> <span class="n">n_rows</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df2</span><span class="o">.</span><span class="n">cols</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertItemsEqual</span><span class="p">(</span><span class="n">columns</span><span class="p">[:</span><span class="mi">4</span><span class="p">],</span> <span class="n">df2</span><span class="o">.</span><span class="n">colnames</span><span class="p">)</span>
+
+        <span class="n">df3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[:,</span> <span class="p">:]</span><span class="o">.</span><span class="n">result</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df3</span><span class="o">.</span><span class="n">rows</span><span class="p">,</span> <span class="n">n_rows</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df3</span><span class="o">.</span><span class="n">cols</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="o">.</span><span class="n">cols</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertItemsEqual</span><span class="p">(</span><span class="n">columns</span><span class="p">,</span> <span class="n">df3</span><span class="o">.</span><span class="n">colnames</span><span class="p">)</span>
+
+        <span class="n">df4</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[:,</span> <span class="s">&#39;mpg&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">result</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df4</span><span class="o">.</span><span class="n">rows</span><span class="p">,</span> <span class="n">n_rows</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df4</span><span class="o">.</span><span class="n">cols</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertItemsEqual</span><span class="p">([</span><span class="s">&#39;mpg&#39;</span><span class="p">],</span> <span class="n">df4</span><span class="o">.</span><span class="n">colnames</span><span class="p">)</span>
+
+        <span class="n">df5</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[:,</span> <span class="p">[</span><span class="s">&#39;mpg&#39;</span><span class="p">,</span> <span class="s">&#39;cyl&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">result</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df5</span><span class="o">.</span><span class="n">rows</span><span class="p">,</span> <span class="n">n_rows</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df5</span><span class="o">.</span><span class="n">cols</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertItemsEqual</span><span class="p">([</span><span class="s">&#39;mpg&#39;</span><span class="p">,</span> <span class="s">&#39;cyl&#39;</span><span class="p">],</span> <span class="n">df5</span><span class="o">.</span><span class="n">colnames</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">KeyError</span><span class="p">):</span>
+            <span class="c"># any custom slicing on the filter expression (rows) is not supported</span>
+            <span class="n">df6</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="s">&#39;mpg&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">result</span>
+
+        <span class="c"># &quot;Natural&quot; column access using pandas-like syntax</span>
+        <span class="n">df7_exp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="o">.</span><span class="n">mpg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">df7_exp</span><span class="p">,</span> <span class="n">adatao</span><span class="o">.</span><span class="n">SubsetExpression</span><span class="p">)</span>
+        <span class="n">df7</span> <span class="o">=</span> <span class="n">df7_exp</span><span class="o">.</span><span class="n">result</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">df7</span><span class="p">,</span> <span class="n">adatao</span><span class="o">.</span><span class="n">DistributedDataFrame</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df7</span><span class="o">.</span><span class="n">rows</span><span class="p">,</span> <span class="n">n_rows</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df7</span><span class="o">.</span><span class="n">cols</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertItemsEqual</span><span class="p">([</span><span class="s">&#39;mpg&#39;</span><span class="p">],</span> <span class="n">df7</span><span class="o">.</span><span class="n">colnames</span><span class="p">)</span>
+
+        <span class="c"># Less &quot;natural&quot; column access using pandas-like syntax</span>
+        <span class="n">df8</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[</span><span class="s">&#39;mpg&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">result</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df8</span><span class="o">.</span><span class="n">rows</span><span class="p">,</span> <span class="n">n_rows</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df8</span><span class="o">.</span><span class="n">cols</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertItemsEqual</span><span class="p">([</span><span class="s">&#39;mpg&#39;</span><span class="p">],</span> <span class="n">df8</span><span class="o">.</span><span class="n">colnames</span><span class="p">)</span>
+
+        <span class="c"># Access the columns using a list of column names, similar to [:, [&#39;mpg&#39;, &#39;disp&#39;]]</span>
+        <span class="n">df9</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[[</span><span class="s">&#39;mpg&#39;</span><span class="p">,</span> <span class="s">&#39;disp&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">result</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df9</span><span class="o">.</span><span class="n">rows</span><span class="p">,</span> <span class="n">n_rows</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df9</span><span class="o">.</span><span class="n">cols</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertItemsEqual</span><span class="p">([</span><span class="s">&#39;mpg&#39;</span><span class="p">,</span> <span class="s">&#39;disp&#39;</span><span class="p">],</span> <span class="n">df9</span><span class="o">.</span><span class="n">colnames</span><span class="p">)</span>
+
+        <span class="c"># Access the columns using a list of column indices, similar to [:, [2, 3, 5]]</span>
+        <span class="n">df10</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">]]</span><span class="o">.</span><span class="n">result</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df10</span><span class="o">.</span><span class="n">rows</span><span class="p">,</span> <span class="n">n_rows</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df10</span><span class="o">.</span><span class="n">cols</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertItemsEqual</span><span class="p">([</span><span class="n">columns</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">]],</span> <span class="n">df10</span><span class="o">.</span><span class="n">colnames</span><span class="p">)</span>
+
+        <span class="c"># &quot;complicated&quot; filter expression and columns</span>
+        <span class="n">df11</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="o">.</span><span class="n">mpg</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">]]</span><span class="o">.</span><span class="n">result</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df11</span><span class="o">.</span><span class="n">rows</span><span class="p">,</span> <span class="n">n_rows</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df11</span><span class="o">.</span><span class="n">cols</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertItemsEqual</span><span class="p">([</span><span class="n">columns</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">]],</span> <span class="n">df11</span><span class="o">.</span><span class="n">colnames</span><span class="p">)</span>
+
+        <span class="n">df12</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="o">.</span><span class="n">mpg</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[</span><span class="s">&#39;disp&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">),</span> <span class="p">[</span><span class="s">&#39;mpg&#39;</span><span class="p">,</span> <span class="s">&#39;disp&#39;</span><span class="p">,</span> <span class="s">&#39;cyl&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">result</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df12</span><span class="o">.</span><span class="n">rows</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df12</span><span class="o">.</span><span class="n">cols</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertItemsEqual</span><span class="p">([</span><span class="s">&#39;mpg&#39;</span><span class="p">,</span> <span class="s">&#39;disp&#39;</span><span class="p">,</span> <span class="s">&#39;cyl&#39;</span><span class="p">],</span> <span class="n">df12</span><span class="o">.</span><span class="n">colnames</span><span class="p">)</span>
+
+        <span class="n">df13</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="o">.</span><span class="n">mpg</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[</span><span class="s">&#39;disp&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">),</span> <span class="p">[</span><span class="s">&#39;mpg&#39;</span><span class="p">,</span> <span class="s">&#39;disp&#39;</span><span class="p">,</span> <span class="s">&#39;cyl&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">result</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df13</span><span class="o">.</span><span class="n">rows</span><span class="p">,</span> <span class="n">n_rows</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df13</span><span class="o">.</span><span class="n">cols</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertItemsEqual</span><span class="p">([</span><span class="s">&#39;mpg&#39;</span><span class="p">,</span> <span class="s">&#39;disp&#39;</span><span class="p">,</span> <span class="s">&#39;cyl&#39;</span><span class="p">],</span> <span class="n">df13</span><span class="o">.</span><span class="n">colnames</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+            <span class="n">df14</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[:,</span> <span class="p">[</span><span class="s">&#39;mpg&#39;</span><span class="p">,</span> <span class="s">&#39;disp&#39;</span><span class="p">]]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;mpg&#39;</span><span class="p">,</span> <span class="s">&#39;disp&#39;</span><span class="p">,</span> <span class="s">&#39;cyl&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">result</span>
+
+        <span class="n">df15</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[(</span><span class="o">~</span><span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="o">.</span><span class="n">mpg</span><span class="o">.</span><span class="n">isnull</span><span class="p">())</span> <span class="o">&amp;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="o">.</span><span class="n">cyl</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">),</span> <span class="p">[</span><span class="s">&#39;mpg&#39;</span><span class="p">,</span> <span class="s">&#39;cyl&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">result</span>
+        <span class="c"># self.assertEqual(df15.rows, 21)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df15</span><span class="o">.</span><span class="n">cols</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertItemsEqual</span><span class="p">([</span><span class="s">&#39;mpg&#39;</span><span class="p">,</span> <span class="s">&#39;cyl&#39;</span><span class="p">],</span> <span class="n">df15</span><span class="o">.</span><span class="n">colnames</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">KeyError</span><span class="p">):</span>
+            <span class="n">df16</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[</span><span class="s">&#39;Crazy column&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">result</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">):</span>
+            <span class="n">df17</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="o">.</span><span class="n">mpg</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="o">.</span><span class="n">disp</span>
+
+        <span class="n">df18</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="o">.</span><span class="n">qesc</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s">&#39;16.&#39;</span><span class="p">,</span> <span class="n">ignore_case</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span> <span class="p">:]</span><span class="o">.</span><span class="n">result</span>
+        <span class="c"># df19 = self.mtcars[self.mtcars.qesc.contains(&#39;16.&#39;, ignore_case=True), :].result</span>
+</div>
+<div class="viewcode-block" id="SubsetTest.testSubsetStr"><a class="viewcode-back" href="../../tests.html#tests.test_subset.SubsetTest.testSubsetStr">[docs]</a>    <span class="k">def</span> <span class="nf">testSubsetStr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">n_rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="o">.</span><span class="n">rows</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="o">.</span><span class="n">colnames</span><span class="p">[:]</span>
+
+        <span class="n">df12</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[</span><span class="s">&#39;(mpg &gt; 3) &amp; (disp &lt; 0)&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;mpg&#39;</span><span class="p">,</span> <span class="s">&#39;disp&#39;</span><span class="p">,</span> <span class="s">&#39;cyl&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">result</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df12</span><span class="o">.</span><span class="n">rows</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df12</span><span class="o">.</span><span class="n">cols</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertItemsEqual</span><span class="p">([</span><span class="s">&#39;mpg&#39;</span><span class="p">,</span> <span class="s">&#39;disp&#39;</span><span class="p">,</span> <span class="s">&#39;cyl&#39;</span><span class="p">],</span> <span class="n">df12</span><span class="o">.</span><span class="n">colnames</span><span class="p">)</span>
+
+        <span class="n">df13</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[</span><span class="s">&#39;(mpg &gt; 3) | (disp &lt; 0.0)&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;mpg&#39;</span><span class="p">,</span> <span class="s">&#39;disp&#39;</span><span class="p">,</span> <span class="s">&#39;cyl&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">result</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df13</span><span class="o">.</span><span class="n">rows</span><span class="p">,</span> <span class="n">n_rows</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df13</span><span class="o">.</span><span class="n">cols</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertItemsEqual</span><span class="p">([</span><span class="s">&#39;mpg&#39;</span><span class="p">,</span> <span class="s">&#39;disp&#39;</span><span class="p">,</span> <span class="s">&#39;cyl&#39;</span><span class="p">],</span> <span class="n">df13</span><span class="o">.</span><span class="n">colnames</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">adatao</span><span class="o">.</span><span class="n">PyClientParserException</span><span class="p">):</span>
+            <span class="n">df14</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[</span><span class="s">&#39;mpg_stupid_column_that_sdf &lt; 0&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;mpg&#39;</span><span class="p">,</span> <span class="s">&#39;disp&#39;</span><span class="p">,</span> <span class="s">&#39;cyl&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">result</span>
+
+        <span class="n">df15</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[</span><span class="s">&#39;(~mpg.isnull()) &amp; (cyl &gt; 5)&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;mpg&#39;</span><span class="p">,</span> <span class="s">&#39;cyl&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">result</span>
+        <span class="c"># self.assertEqual(df15.rows, 21)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">df15</span><span class="o">.</span><span class="n">cols</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertItemsEqual</span><span class="p">([</span><span class="s">&#39;mpg&#39;</span><span class="p">,</span> <span class="s">&#39;cyl&#39;</span><span class="p">],</span> <span class="n">df15</span><span class="o">.</span><span class="n">colnames</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">adatao</span><span class="o">.</span><span class="n">PyClientParserException</span><span class="p">):</span>
+            <span class="c"># &quot;and&quot; and &quot;or&quot; DON&#39;T work. Use bitwise operators (&amp;, |) instead</span>
+            <span class="n">df16</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[</span><span class="s">&#39;(~mpg.isnull()) and (cyl &gt; 5)&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;mpg&#39;</span><span class="p">,</span> <span class="s">&#39;cyl&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">result</span>
+
+        <span class="n">df18</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[</span><span class="s">&#39;qesc.contains(&quot;16.&quot;, ignore_case=False)&#39;</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">result</span>
+        <span class="c"># df19 = self.mtcars[&#39;qesc.contains(&quot;16.&quot;, ignore_case=True)&#39;, :].result</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">adatao</span><span class="o">.</span><span class="n">PyClientParserException</span><span class="p">):</span>
+            <span class="n">df20</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtcars</span><span class="p">[</span><span class="s">&#39;mpg and qesc.contains(&quot;16.&quot;, ignore_case=True)&#39;</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">result</span>
+
+</div></div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">PyClient 0.3.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Adatao.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

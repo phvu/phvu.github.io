@@ -1,0 +1,876 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>adatao.viz package &mdash; PyClient 0.3.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.3.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyClient 0.3.0 documentation" href="index.html" />
+    <link rel="up" title="adatao package" href="adatao.html" />
+    <link rel="next" title="setup module" href="setup.html" />
+    <link rel="prev" title="adatao.ml package" href="adatao.ml.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="setup.html" title="setup module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="adatao.ml.html" title="adatao.ml package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">PyClient 0.3.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="adatao.html" accesskey="U">adatao package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="adatao-viz-package">
+<h1>adatao.viz package<a class="headerlink" href="#adatao-viz-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-adatao.viz.adaviz">
+<span id="adatao-viz-adaviz-module"></span><h2>adatao.viz.adaviz module<a class="headerlink" href="#module-adatao.viz.adaviz" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="adatao.viz.adaviz.area_chart">
+<code class="descclassname">adatao.viz.adaviz.</code><code class="descname">area_chart</code><span class="sig-paren">(</span><em>data</em>, <em>category</em>, <em>measurement</em>, <em>category2=None</em>, <em>grouped=False</em>, <em>stacked=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/adaviz.html#area_chart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.adaviz.area_chart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw area charts
+:param data: a pandas DataFrame
+:param category: indicates which field of the dataset will be used as a dimension to plot the bars,</p>
+<blockquote>
+<div>this is the other axis relative to measurement.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>measurements</strong> (<em>str or unicode</em>) &#8211; indicates which field of the dataset will be used as a numerical measure,
+that will dictate the length of the bars.</li>
+<li><strong>category2</strong> &#8211; (optional) is how to group the bars in case of stacked or grouped bars,
+and what is used for the legend.</li>
+<li><strong>grouped</strong> &#8211; (optional) makes a grouped chart. i.e. for each category, there will be a cluster of bars.</li>
+<li><strong>stacked</strong> &#8211; (optional) makes a stacked chart. i.e. for each category,
+there will be a column of rectangles, each starting from the end of the previous one.
+While this supports negative value, this mode is not recommended for data with mixed signs.</li>
+<li><strong>kwargs</strong> &#8211; <p>additional options:
+- <strong>regroup</strong>: (True/False) allowing to regroup if there are too many categories
+- <strong>title</strong>: provides a title for the chart.
+- <strong>columnXTitle</strong>: provides a title for the X axis.
+- <strong>columnYTitle</strong>: provides a title for the Y axis.
+- <strong>fixedHeight</strong>: (optional) specifies a maximum height for the bottom of the chart.</p>
+<blockquote>
+<div>If labels are too tall or too long, they will be chopped.</div></blockquote>
+<ul>
+<li><strong>fixedWidth</strong>: (optional) specifies a maximum width for the left of the chart.</li>
+</ul>
+<p>If labels are too long, they will be chopped.
+- <strong>maxCat</strong>: (optional) specifies the maximum number of series.
+If &#8220;category2&#8221; has more different values than this, the extra values will be aggregated as one series.
+To show all series, pass &#8220;all&#8221;
+- <strong>canResize</strong>: (optional) this is for horizontal bar charts.
+If this is omitted or set to false, in the case there are too many rows to be displayed properly,
+they will be dropped from the display. If this is set to true,
+the chart will expand in height to accommodate all the rows.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">depend on the render mode.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="adatao.viz.adaviz.auto_chart">
+<code class="descclassname">adatao.viz.adaviz.</code><code class="descname">auto_chart</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/adaviz.html#auto_chart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.adaviz.auto_chart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Automatically pick a suitable chart type
+:param data: a pandas DataFrame
+:param kwargs: optional parameters
+:return: depends on the renderer mode</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="adatao.viz.adaviz.bar_chart">
+<code class="descclassname">adatao.viz.adaviz.</code><code class="descname">bar_chart</code><span class="sig-paren">(</span><em>data</em>, <em>category</em>, <em>measurement</em>, <em>category2=None</em>, <em>grouped=False</em>, <em>stacked=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/adaviz.html#bar_chart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.adaviz.bar_chart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw bar charts, including stacked, grouped or histogram bar charts
+:param data: a pandas DataFrame
+:param category: indicates which field of the dataset will be used as a dimension to plot the bars,</p>
+<blockquote>
+<div>this is the other axis relative to measurement.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>measurements</strong> (<em>str or unicode</em>) &#8211; indicates which field of the dataset will be used as a numerical measure,
+that will dictate the length of the bars.</li>
+<li><strong>category2</strong> &#8211; (optional) is how to group the bars in case of stacked or grouped bars,
+and what is used for the legend.</li>
+<li><strong>grouped</strong> &#8211; (optional) makes a grouped chart. i.e. for each category, there will be a cluster of bars.</li>
+<li><strong>stacked</strong> &#8211; (optional) makes a stacked chart. i.e. for each category,
+there will be a column of rectangles, each starting from the end of the previous one.
+While this supports negative value, this mode is not recommended for data with mixed signs.</li>
+<li><strong>kwargs</strong> &#8211; <p>additional options:
+- <strong>regroup</strong>: (True/False) allowing to regroup if there are too many categories
+- <strong>title</strong>: provides a title for the chart.
+- <strong>columnXTitle</strong>: provides a title for the X axis.
+- <strong>columnYTitle</strong>: provides a title for the Y axis.
+- <strong>fixedHeight</strong>: (optional) specifies a maximum height for the bottom of the chart.</p>
+<blockquote>
+<div>If labels are too tall or too long, they will be chopped.</div></blockquote>
+<ul>
+<li><strong>fixedWidth</strong>: (optional) specifies a maximum width for the left of the chart.</li>
+</ul>
+<p>If labels are too long, they will be chopped.
+- <strong>maxCat</strong>: (optional) specifies the maximum number of series.
+If &#8220;category2&#8221; has more different values than this, the extra values will be aggregated as one series.
+To show all series, pass &#8220;all&#8221;
+- <strong>canResize</strong>: (optional) this is for horizontal bar charts.
+If this is omitted or set to false, in the case there are too many rows to be displayed properly,
+they will be dropped from the display. If this is set to true,
+the chart will expand in height to accommodate all the rows.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">depend on the render mode.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="adatao.viz.adaviz.box_plot">
+<code class="descclassname">adatao.viz.adaviz.</code><code class="descname">box_plot</code><span class="sig-paren">(</span><em>data</em>, <em>category</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/adaviz.html#box_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.adaviz.box_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Boxplot creates box plot charts. It requires one or two category fields, and one measurement field.
+There are two ways to invoke the charttype function - either with a category / measurement field couple,
+in which case the client will do the aggregation,
+or by specifying the quartiles, median, and possibly minimum and maximum.
+In that case aggregation happens before plotting ie at the server level.</p>
+<p>Here are the parameters in input that have an impact on boxplot.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>category</strong> &#8211; (required) field used to group the records before examining their distribution.</td>
+</tr>
+</tbody>
+</table>
+<p>Controls the name of the columns.
+:param category2: (optional) field used to group the records before examining their distribution.
+Controles the colors and name of the series.
+:param crossbar: (optional) if set to true, only the quartiles and medians are shown,
+there won&#8217;t be whiskers to minimum or maximum.
+:param dots: (optional) if set to true, dots for each of the actual record will be plotted.
+:param max: (optional) specifies the name of the field where to find the maximum value of a column.
+:param measurement: (required for the client aggregation method)
+what field of the dataset on which the distribution will be computed.
+:param median: (required for the server aggregation method) where to find the median value of a column.
+:param min: (optional) specifies the name of the field where to find the minimum value of a column
+:param q1: (required for the server aggregation method) where to find the 1st quartile value for a column
+:param q3: (required for the server aggregation method) where to find the 3rd quartile value for a column
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="adatao.viz.adaviz.bubble_chart">
+<code class="descclassname">adatao.viz.adaviz.</code><code class="descname">bubble_chart</code><span class="sig-paren">(</span><em>data</em>, <em>category</em>, <em>measurement</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/adaviz.html#bubble_chart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.adaviz.bubble_chart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bubble is a function dedicated to rendering bubble charts and scatterplots.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>category</strong> &#8211; what field of the dataset will be used as a numerical measure for the X axis.</li>
+<li><strong>measurement</strong> &#8211; what field of the dataset will be used as a numerical measure for the Y axis.</li>
+<li><strong>category2</strong> &#8211; (optional) what field of the dataset can be used to distinguish groups of records by color,</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>and is used for the legend.
+:param maxCat: (optional) specifies the maximum number of series.
+If &#8220;category2&#8221; has more different values than this, the extra values will be aggregated as one series.
+To show all series, pass &#8220;all&#8221;
+:param jitter: (optional) specifies whether there should be jitter,
+ie random noise added to points that happen to have the same value for one of their dimensions.
+Jitter takes a numerical value - the proportion of the charting area that could be added to such a dimension.
+The default is .01 (which means that dots affected by jitter could be off by 1% from their original position).
+Mouseover will reveal the original value of the dots, regardless of jitter.
+To deactivate the effect, pass 0 to the parameter.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="adatao.viz.adaviz.data_table">
+<code class="descclassname">adatao.viz.adaviz.</code><code class="descname">data_table</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/adaviz.html#data_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.adaviz.data_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show a data table
+:param data: a pandas DataFrame
+:param kwargs: optional parameters
+:return: depends on the renderer mode</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="adatao.viz.adaviz.dot_chart">
+<code class="descclassname">adatao.viz.adaviz.</code><code class="descname">dot_chart</code><span class="sig-paren">(</span><em>data</em>, <em>category</em>, <em>measurement</em>, <em>category2=None</em>, <em>grouped=False</em>, <em>stacked=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/adaviz.html#dot_chart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.adaviz.dot_chart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw area charts
+:param data: a pandas DataFrame
+:param category: indicates which field of the dataset will be used as a dimension to plot the bars,</p>
+<blockquote>
+<div>this is the other axis relative to measurement.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>measurements</strong> (<em>str or unicode</em>) &#8211; indicates which field of the dataset will be used as a numerical measure,
+that will dictate the length of the bars.</li>
+<li><strong>category2</strong> &#8211; (optional) is how to group the bars in case of stacked or grouped bars,
+and what is used for the legend.</li>
+<li><strong>grouped</strong> &#8211; (optional) makes a grouped chart. i.e. for each category, there will be a cluster of bars.</li>
+<li><strong>stacked</strong> &#8211; (optional) makes a stacked chart. i.e. for each category,
+there will be a column of rectangles, each starting from the end of the previous one.
+While this supports negative value, this mode is not recommended for data with mixed signs.</li>
+<li><strong>kwargs</strong> &#8211; <p>additional options:
+- <strong>regroup</strong>: (True/False) allowing to regroup if there are too many categories
+- <strong>title</strong>: provides a title for the chart.
+- <strong>columnXTitle</strong>: provides a title for the X axis.
+- <strong>columnYTitle</strong>: provides a title for the Y axis.
+- <strong>fixedHeight</strong>: (optional) specifies a maximum height for the bottom of the chart.</p>
+<blockquote>
+<div>If labels are too tall or too long, they will be chopped.</div></blockquote>
+<ul>
+<li><strong>fixedWidth</strong>: (optional) specifies a maximum width for the left of the chart.</li>
+</ul>
+<p>If labels are too long, they will be chopped.
+- <strong>maxCat</strong>: (optional) specifies the maximum number of series.
+If &#8220;category2&#8221; has more different values than this, the extra values will be aggregated as one series.
+To show all series, pass &#8220;all&#8221;
+- <strong>canResize</strong>: (optional) this is for horizontal bar charts.
+If this is omitted or set to false, in the case there are too many rows to be displayed properly,
+they will be dropped from the display. If this is set to true,
+the chart will expand in height to accommodate all the rows.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">depend on the render mode.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="adatao.viz.adaviz.geo_hex_bin">
+<code class="descclassname">adatao.viz.adaviz.</code><code class="descname">geo_hex_bin</code><span class="sig-paren">(</span><em>data</em>, <em>lat</em>, <em>lon</em>, <em>measurement</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/adaviz.html#geo_hex_bin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.adaviz.geo_hex_bin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw a hexbin overlaying on top of a map.
+:param data: a pandas DataFrame
+:param lat: which field of the dataset should be used to retrieve latitude.
+:param lon: which field of the dataset should be used to retrieve longitude.
+:param measurement: which field of the dataset should be used to retrieve a value to be represented.</p>
+<blockquote>
+<div>This is optional, if nothing is provided, this will be used to count the number of records that exist in a cell.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>kwargs</strong> &#8211; additional options
+- <strong>title</strong>: provides a title for the chart.
+- <strong>center</strong>: array of latitude, longitude values. Center of the map, if not provided,
+barycenter of the records.
+- <strong>zoomLevel</strong>: initial zoom level, or 9.
+- <strong>radius</strong>: radius of the hexagons, or 20 pixels
+- <strong>opacity</strong>: opacity of the hexagons, or .8.
+- <strong>tileSource</strong>: url where the tiles are stored.
+- <strong>operation</strong>: &#8220;avg&#8221; or &#8220;sum&#8221; for the measurement.
+This is optional, if nothing is provided, hexbin will just count the cells.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">depending on the renderer mode</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="adatao.viz.adaviz.heat_map">
+<code class="descclassname">adatao.viz.adaviz.</code><code class="descname">heat_map</code><span class="sig-paren">(</span><em>data</em>, <em>category</em>, <em>category2</em>, <em>measurement</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/adaviz.html#heat_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.adaviz.heat_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw a heatmap, that is, the distribution of a value according to two categorical dimensions.
+:param data: a pandas DataFrame
+:param category: see <cite>category2</cite>
+:param category2: <cite>category</cite> and <cite>category2</cite> indicate which fields of the dataset will be used as</p>
+<blockquote>
+<div>dimensions to create the grid of the heatmap. The variable with the highest number of unique values
+will be used as the down variable, the one with the fewest unique values will be used across.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>measurement</strong> &#8211; indicates which field of the dataset will be used as a numerical measure - that
+will affect the color of the cells of the heatmap.</li>
+<li><strong>kwargs</strong> &#8211; additional options:
+- <strong>title</strong>: provides a title for the chart.
+- <strong>canResize</strong>: whether AdaViz is allowed to change the height or width of the chart
+if it can&#8217;t fit a legible heatmap. If set to false, rows which cannot be displayed will be chopped.
+There is currently no implemented restriction or resizing in terms of numbers columns across,
+so overlapping may happen at some point.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="adatao.viz.adaviz.hex_bin">
+<code class="descclassname">adatao.viz.adaviz.</code><code class="descname">hex_bin</code><span class="sig-paren">(</span><em>data</em>, <em>category</em>, <em>measurement</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/adaviz.html#hex_bin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.adaviz.hex_bin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw a hex bin.
+:param data:
+:param category:
+:param measurement:
+:param kwargs:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>title</strong>: provides a title for the chart.</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="adatao.viz.adaviz.histogram">
+<code class="descclassname">adatao.viz.adaviz.</code><code class="descname">histogram</code><span class="sig-paren">(</span><em>data</em>, <em>category</em>, <em>measurement</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/adaviz.html#histogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.adaviz.histogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw area charts
+:param data: a pandas DataFrame
+:param category: indicates which field of the dataset will be used as a dimension to plot the bars,</p>
+<blockquote>
+<div>this is the other axis relative to measurement.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>kwargs</strong> &#8211; <p>additional options:
+- <strong>regroup</strong>: (True/False) allowing to regroup if there are too many categories
+- <strong>title</strong>: provides a title for the chart.
+- <strong>columnXTitle</strong>: provides a title for the X axis.
+- <strong>columnYTitle</strong>: provides a title for the Y axis.
+- <strong>fixedHeight</strong>: (optional) specifies a maximum height for the bottom of the chart.</p>
+<blockquote>
+<div>If labels are too tall or too long, they will be chopped.</div></blockquote>
+<ul class="simple">
+<li><strong>fixedWidth</strong>: (optional) specifies a maximum width for the left of the chart.</li>
+</ul>
+<p>If labels are too long, they will be chopped.
+- <strong>maxCat</strong>: (optional) specifies the maximum number of series.
+If &#8220;category2&#8221; has more different values than this, the extra values will be aggregated as one series.
+To show all series, pass &#8220;all&#8221;
+- <strong>canResize</strong>: (optional) this is for horizontal bar charts.
+If this is omitted or set to false, in the case there are too many rows to be displayed properly,
+they will be dropped from the display. If this is set to true,
+the chart will expand in height to accommodate all the rows.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">depend on the render mode.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="adatao.viz.adaviz.line_chart">
+<code class="descclassname">adatao.viz.adaviz.</code><code class="descname">line_chart</code><span class="sig-paren">(</span><em>data</em>, <em>category</em>, <em>measurement</em>, <em>category2=None</em>, <em>grouped=False</em>, <em>stacked=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/adaviz.html#line_chart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.adaviz.line_chart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw line charts
+:param data: a pandas DataFrame
+:param category: indicates which field of the dataset will be used as a dimension to plot the bars,</p>
+<blockquote>
+<div>this is the other axis relative to measurement.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>measurements</strong> (<em>str or unicode</em>) &#8211; indicates which field of the dataset will be used as a numerical measure,
+that will dictate the length of the bars.</li>
+<li><strong>category2</strong> &#8211; (optional) is how to group the bars in case of stacked or grouped bars,
+and what is used for the legend.</li>
+<li><strong>grouped</strong> &#8211; (optional) makes a grouped chart. i.e. for each category, there will be a cluster of bars.</li>
+<li><strong>stacked</strong> &#8211; (optional) makes a stacked chart. i.e. for each category,
+there will be a column of rectangles, each starting from the end of the previous one.
+While this supports negative value, this mode is not recommended for data with mixed signs.</li>
+<li><strong>kwargs</strong> &#8211; <p>additional options:
+- <strong>regroup</strong>: (True/False) allowing to regroup if there are too many categories
+- <strong>title</strong>: provides a title for the chart.
+- <strong>columnXTitle</strong>: provides a title for the X axis.
+- <strong>columnYTitle</strong>: provides a title for the Y axis.
+- <strong>fixedHeight</strong>: (optional) specifies a maximum height for the bottom of the chart.</p>
+<blockquote>
+<div>If labels are too tall or too long, they will be chopped.</div></blockquote>
+<ul>
+<li><strong>fixedWidth</strong>: (optional) specifies a maximum width for the left of the chart.</li>
+</ul>
+<p>If labels are too long, they will be chopped.
+- <strong>maxCat</strong>: (optional) specifies the maximum number of series.
+If &#8220;category2&#8221; has more different values than this, the extra values will be aggregated as one series.
+To show all series, pass &#8220;all&#8221;
+- <strong>canResize</strong>: (optional) this is for horizontal bar charts.
+If this is omitted or set to false, in the case there are too many rows to be displayed properly,
+they will be dropped from the display. If this is set to true,
+the chart will expand in height to accommodate all the rows.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">depend on the render mode.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="adatao.viz.adaviz.multiple_bar_chart">
+<code class="descclassname">adatao.viz.adaviz.</code><code class="descname">multiple_bar_chart</code><span class="sig-paren">(</span><em>data</em>, <em>category</em>, <em>category2</em>, <em>measurement</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/adaviz.html#multiple_bar_chart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.adaviz.multiple_bar_chart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle the small multiples situation for bar charts.
+In other terms, multiple bars draws several &#8220;mini-charts&#8221; in the space of a regular chart.
+Most of its functionality is dedicated to fit as many mini charts as needed in that space,
+utilize that space as well as possible, and if the charts can fit, and if it is allowed to do so,
+expand the space of the chart to fit everything. If multiple bars isn&#8217;t allowed to expand,
+it chooses the most relevant data to display.</p>
+<p><strong>How the multiple bars work</strong>:
+First it determines how many mini charts it can fit horizontally, based on label lengths and <cite>minChartWidth</cite>.
+Then, it determines how many charts it can fit vertically, based on <cite>minChartHeight</cite>, number of rows per chart,
+label heights, spacing etc. If it cannot fit all mini charts, it will drop rows of the mini charts to
+reduce them to their minChartHeight.</p>
+<p>For instance, if the minChartHeight is 100, and a row needs 16 pixels, it will drop any row after the 6th.
+Then, it will only fit as many mini charts as possible.
+However, once that max number of mini charts has been reached, if there is still space available at the bottom,
+it will try to get those dropped rows back. If the chart is allowed to expand, then its height will increase
+to fit all minicharts and all rows.
+:param data: a pandas DataFrame
+:param category: indicates which field of the dataset will be used as a dimension to plot the</p>
+<blockquote>
+<div>bars - this is the other axis relative to measurement.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>category2</strong> &#8211; indicates which field of the dataset will be used to group the bars in distinct mini charts.</li>
+<li><strong>measurement</strong> &#8211; indicates which field of the dataset will be used as a numerical measure - that
+will dictate the length of the bars.</li>
+<li><strong>kwargs</strong> &#8211; additional options:
+- <strong>title</strong>: provides a title for the chart.
+- <strong>minChartWidth</strong> indicates the minimum width for the charts in pixels.
+When resized, the charts can go up and down in width, but they won&#8217;t get under minChartWidth,
+which is set by default to 100.
+- <strong>minChartHeight</strong> indicates the minimum height for the charts in pixels.
+When resized, the charts can go up and down in height, but they won&#8217;t get under minChartHeight,
+which is set by default to 100.
+- <strong>canResize</strong>: (True/False) whether the chart is allowed to expand vertically or
+whether it must try to fit everything in a fixed space.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">depending on the renderer mode</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="adatao.viz.adaviz.pie_chart">
+<code class="descclassname">adatao.viz.adaviz.</code><code class="descname">pie_chart</code><span class="sig-paren">(</span><em>data</em>, <em>category</em>, <em>measurement</em>, <em>donut=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/adaviz.html#pie_chart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.adaviz.pie_chart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw a pie or dunut chart.
+:param data: a pandas&#8217; DataFrame
+:param category: indicates how the slices are grouped.
+:param measurement: what field of the dataset will be used as a numerical measure.</p>
+<blockquote>
+<div>Each slice of the pie will represent a share of a sum of that total.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>donut</strong> &#8211; whether or not to draw a donut chart instead of pie chart</li>
+<li><strong>kwargs</strong> &#8211; additional options:
+- <strong>regroup</strong>: (True/False) allowing to regroup if there are too many categories
+- <strong>title</strong>: provides a title for the chart.
+- <strong>maxCat</strong>: (optional) specifies the maximum number of series.
+If &#8220;category&#8221; has more different values than this,
+the extra values will be aggregated as one series. To show all series, pass &#8220;all&#8221;
+- <strong>label</strong>: (optional) determines what will be shown next to the slices.
+&#8220;percentage&#8221; (the default) is a rounded value of the percentage of the total that each slice represents.
+Other possibilities are value (the actual value, &#8220;autorounded&#8221;) and category (the name of the series).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">depends on the renderer mode</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="adatao.viz.adaviz.scatterplot">
+<code class="descclassname">adatao.viz.adaviz.</code><code class="descname">scatterplot</code><span class="sig-paren">(</span><em>data</em>, <em>category</em>, <em>measurement</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/adaviz.html#scatterplot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.adaviz.scatterplot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw a scatter plot
+:param data: a pandas&#8217; DataFrame
+:param category: what field of the dataset will be used as a numerical measure for the X axis.
+:param measurement: what field of the dataset will be used as a numerical measure for the Y axis.
+:param kwargs: additional options:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>title</strong>: provides a title for the chart.</li>
+<li><strong>category2</strong>: (optional) what field of the dataset can be used to distinguish</li>
+</ul>
+<p>groups of records by color, and is used for the legend.
+- <strong>maxCat</strong>: (optional) specifies the maximum number of series.
+If &#8220;category2&#8221; has more different values than this, the extra values will be aggregated as one series.
+To show all series, pass &#8220;all&#8221;
+- <strong>jitter</strong>: (optional) specifies whether there should be jitter,
+i.e. random noise added to points that happen to have the same value for one of their dimensions.
+Jitter takes a numerical value - the proportion of the charting area that could be added to such a dimension.
+The default is .01 (which means that dots affected by jitter could be off by 1% from their original position).
+Mouseover will reveal the original value of the dots, regardless of jitter.
+To deactivate the effect, pass 0 to the parameter.</p>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">depending on the renderer mode</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="adatao.viz.adaviz.series">
+<code class="descclassname">adatao.viz.adaviz.</code><code class="descname">series</code><span class="sig-paren">(</span><em>data</em>, <em>category</em>, <em>measurement</em>, <em>subtype=''</em>, <em>category2=None</em>, <em>grouped=False</em>, <em>stacked=False</em>, <em>histogram=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/adaviz.html#series"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.adaviz.series" title="Permalink to this definition">¶</a></dt>
+<dd><p>Working function to plot area, bar, dot and line charts. Those can also be grouped or stacked.
+The multiple bar chart actually uses a dedicated function, as it has specific spacing requirements.
+It is possible to create a grouped bar chart and a stacked bar chart by
+setting the chart type as &#8220;bar.grouped&#8221; and &#8220;bar.stacked&#8221; respectively.</p>
+<p>It is also possible to set a &#8220;grouped&#8221; or a &#8220;stacked&#8221; flag to true.
+There is also a possible &#8220;bar.histogram&#8221; chart type (which is not currently used),
+and a &#8220;histogram&#8221; flag that can be set to true.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> &#8211; a pandas DataFrame</li>
+<li><strong>category</strong> &#8211; indicates which field of the dataset will be used as a dimension
+to plot the bars - this is the other axis relative to measurement.</li>
+<li><strong>measurement</strong> &#8211; indicates which field of the dataset will be used as a
+numerical measure - that will dictate the length of the bars.</li>
+<li><strong>subtype</strong> &#8211; (optional) if this is set to &#8220;area&#8221;, &#8220;dot&#8221; or &#8220;line&#8221;, this creates an area chart,
+dot chart or line chart, respectively. By default, this is blank and creates a bar chart.</li>
+<li><strong>category2</strong> &#8211; (optional) is how to group the bars in case of stacked or grouped bars,
+and what is used for the legend.</li>
+<li><strong>grouped</strong> &#8211; (optional) makes a grouped chart. i.e. for each category, there will be a cluster of bars.</li>
+<li><strong>stacked</strong> &#8211; (optional) makes a stacked chart. i.e. for each category,
+there will be a column of rectangles, each starting from the end of the previous one.
+While this supports negative value, this mode is not recommended for data with mixed signs.</li>
+<li><strong>histogram</strong> &#8211; (optional) makes a distribution histogram.</li>
+<li><strong>kwargs</strong> &#8211; <p>optional arguments
+- <strong>canResize</strong>: (optional) this is for horizontal bar charts.</p>
+<blockquote>
+<div>If this is omitted or set to false, in the case there are too many rows to be displayed properly,
+they will be dropped from the display. If this is set to true,
+the chart will expand in height to accommodate all the rows.</div></blockquote>
+<ul>
+<li><strong>columnXTitle</strong>: (optional) provides a title for the X axis.</li>
+<li><strong>columnYTitle</strong>: (optional) provides a title for the Y axis.</li>
+<li><dl class="first docutils">
+<dt><strong>fixedHeight</strong>: (optional) specifies a maximum height for the bottom of the chart.</dt>
+<dd>If labels are too tall or too long, they will be chopped.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>fixedWidth</strong>: (optional) specifies a maximum width for the left of the chart.</dt>
+<dd>If labels are too long, they will be chopped.</dd>
+</dl>
+</li>
+<li><strong>title</strong>: (optional) provides a title for the chart.</li>
+<li><dl class="first docutils">
+<dt><strong>maxCat</strong>: (optional) specifies the maximum number of series.</dt>
+<dd>If &#8220;category2&#8221; has more different values than this, the extra values will be aggregated as one series.
+To show all series, pass &#8220;all&#8221;</dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">depends on the renderer mode</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="adatao.viz.adaviz.set_renderer_mode">
+<code class="descclassname">adatao.viz.adaviz.</code><code class="descname">set_renderer_mode</code><span class="sig-paren">(</span><em>mode</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/adaviz.html#set_renderer_mode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.adaviz.set_renderer_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set renderer used for the whole library
+:param mode: &#8216;narratives&#8217;, &#8216;browser&#8217;, &#8216;html&#8217;</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>narratives</strong>: output a json string, intended to be used inside Narratives</li>
+<li><strong>browser</strong>: open a new browser window showing the plot</li>
+<li><strong>html</strong>: write the output to a HTML file stored in a directory given in the <cite>output_dir</cite> parameter.</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>kwargs</strong> &#8211; additional options</td>
+</tr>
+</tbody>
+</table>
+<p>If mode = &#8216;html&#8217;, an option is &#8216;output_dir&#8217;, specifying
+a local path where the output HTML files will be written.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="adatao.viz.adaviz.tree_map">
+<code class="descclassname">adatao.viz.adaviz.</code><code class="descname">tree_map</code><span class="sig-paren">(</span><em>data</em>, <em>category</em>, <em>measurement</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/adaviz.html#tree_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.adaviz.tree_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw a tree map
+:param data: a pandas DataFrame
+:param category: what field of the dataset will be used to split the area
+:param measurement: what field of the dataset will be used as a numerical measure for the area of each category.
+:param kwargs: additional options</p>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt><strong>category2</strong>: what field of the dataset will be used to group values, on top of the &#8220;category&#8221; field.</dt>
+<dd><p class="first last">Also controls color.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>padding</strong>: (optional) what space should there be around text in the cells.</dt>
+<dd><p class="first last">If there&#8217;s no space to write text properly, it is not displayed.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">depending on the renderer mode</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-adatao.viz.renderers">
+<span id="adatao-viz-renderers-module"></span><h2>adatao.viz.renderers module<a class="headerlink" href="#module-adatao.viz.renderers" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="adatao.viz.renderers.HtmlRenderer">
+<em class="property">class </em><code class="descclassname">adatao.viz.renderers.</code><code class="descname">HtmlRenderer</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/renderers.html#HtmlRenderer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.renderers.HtmlRenderer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#adatao.viz.renderers.Renderer" title="adatao.viz.renderers.Renderer"><code class="xref py py-class docutils literal"><span class="pre">adatao.viz.renderers.Renderer</span></code></a></p>
+<p>Write the HTML output to a destination folder.
+The HTML files will be named by the timestamp it was generated.</p>
+<dl class="method">
+<dt id="adatao.viz.renderers.HtmlRenderer.render">
+<code class="descname">render</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/renderers.html#HtmlRenderer.render"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.renderers.HtmlRenderer.render" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="adatao.viz.renderers.LocalBrowserRenderer">
+<em class="property">class </em><code class="descclassname">adatao.viz.renderers.</code><code class="descname">LocalBrowserRenderer</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/renderers.html#LocalBrowserRenderer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.renderers.LocalBrowserRenderer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#adatao.viz.renderers.Renderer" title="adatao.viz.renderers.Renderer"><code class="xref py py-class docutils literal"><span class="pre">adatao.viz.renderers.Renderer</span></code></a></p>
+<p>Automatically display the charts in browser</p>
+<dl class="method">
+<dt id="adatao.viz.renderers.LocalBrowserRenderer.render">
+<code class="descname">render</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/renderers.html#LocalBrowserRenderer.render"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.renderers.LocalBrowserRenderer.render" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="adatao.viz.renderers.NarrativesRenderer">
+<em class="property">class </em><code class="descclassname">adatao.viz.renderers.</code><code class="descname">NarrativesRenderer</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/renderers.html#NarrativesRenderer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.renderers.NarrativesRenderer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#adatao.viz.renderers.Renderer" title="adatao.viz.renderers.Renderer"><code class="xref py py-class docutils literal"><span class="pre">adatao.viz.renderers.Renderer</span></code></a></p>
+<p>Specialized for Narratives</p>
+<dl class="method">
+<dt id="adatao.viz.renderers.NarrativesRenderer.render">
+<code class="descname">render</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/renderers.html#NarrativesRenderer.render"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.renderers.NarrativesRenderer.render" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="adatao.viz.renderers.Renderer">
+<em class="property">class </em><code class="descclassname">adatao.viz.renderers.</code><code class="descname">Renderer</code><a class="reference internal" href="_modules/adatao/viz/renderers.html#Renderer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.renderers.Renderer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="adatao.viz.renderers.Renderer.render">
+<code class="descname">render</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/renderers.html#Renderer.render"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.renderers.Renderer.render" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="adatao.viz.renderers.write_output">
+<code class="descclassname">adatao.viz.renderers.</code><code class="descname">write_output</code><span class="sig-paren">(</span><em>out_file</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/adatao/viz/renderers.html#write_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adatao.viz.renderers.write_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-adatao.viz">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-adatao.viz" title="Permalink to this headline">¶</a></h2>
+<p>Adatao&#8217;s visualization engine</p>
+<p>This sub-package implements a Python interface for <cite>adaViz</cite> - Adatao&#8217;s visualization engine.</p>
+<p>For a complete documentation, check adaVizJS doc at
+<a class="reference external" href="https://github.com/adatao/adaVIZ-JS/blob/master/docs/spec.md">https://github.com/adatao/adaVIZ-JS/blob/master/docs/spec.md</a></p>
+<p>By default, all the plotting functions in this package return a bunch of JSON code,
+intended to be used inside Narratives.</p>
+<p>For interactive works, you might want to output them to HTML files.
+This can be controlled using the <cite>viz.set_renderer_mode()</cite> function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">viz</span><span class="o">.</span><span class="n">set_renderer_mode</span><span class="p">(</span><span class="s">&#39;html&#39;</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="s">&#39;[your_local_path]&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will make all functions give their output as a HTML files stored in
+the directory specified in <cite>output_dir</cite>. The HTML file name will be the timestamp
+at which the function is called. Every call to a function will return a single file.
+If <cite>output_dir</cite> is not given,
+it is defaulted to be the temporary folder on your system.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">viz</span><span class="o">.</span><span class="n">set_renderer_mode</span><span class="p">(</span><span class="s">&#39;browser&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Similar to <cite>html</cite>, but writes the output to the temporary folder and automatically
+opens a new browser window to show the result.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">viz</span><span class="o">.</span><span class="n">set_renderer_mode</span><span class="p">(</span><span class="s">&#39;narratives&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To be used inside Narratives.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">adatao.viz package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-adatao.viz.adaviz">adatao.viz.adaviz module</a></li>
+<li><a class="reference internal" href="#module-adatao.viz.renderers">adatao.viz.renderers module</a></li>
+<li><a class="reference internal" href="#module-adatao.viz">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="adatao.ml.html"
+                        title="previous chapter">adatao.ml package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="setup.html"
+                        title="next chapter">setup module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/adatao.viz.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="setup.html" title="setup module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="adatao.ml.html" title="adatao.ml package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">PyClient 0.3.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="adatao.html" >adatao package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Adatao.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

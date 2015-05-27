@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>adatao.core.filter_expression_parser &mdash; PyClient 0.3.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.3.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="PyClient 0.3.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">PyClient 0.3.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for adatao.core.filter_expression_parser</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">ast</span>
+<span class="kn">import</span> <span class="nn">numbers</span>
+<span class="kn">from</span> <span class="nn">errors</span> <span class="kn">import</span> <span class="n">PyClientParserException</span>
+<span class="kn">from</span> <span class="nn">subset_expression</span> <span class="kn">import</span> <span class="n">SubsetExpression</span>
+
+<div class="viewcode-block" id="FilterExpressionVisitor"><a class="viewcode-back" href="../../../adatao.core.html#adatao.core.filter_expression_parser.FilterExpressionVisitor">[docs]</a><span class="k">class</span> <span class="nc">FilterExpressionVisitor</span><span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">NodeVisitor</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ddf</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expressions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ddf</span> <span class="o">=</span> <span class="n">ddf</span>
+
+<div class="viewcode-block" id="FilterExpressionVisitor.compute"><a class="viewcode-back" href="../../../adatao.core.html#adatao.core.filter_expression_parser.FilterExpressionVisitor.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">query</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="FilterExpressionVisitor.visit_Module"><a class="viewcode-back" href="../../../adatao.core.html#adatao.core.filter_expression_parser.FilterExpressionVisitor.visit_Module">[docs]</a>    <span class="k">def</span> <span class="nf">visit_Module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expressions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generic_visit</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">PyClientParserException</span><span class="p">(</span><span class="s">&#39;Invalid expression&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="FilterExpressionVisitor.visit_Num"><a class="viewcode-back" href="../../../adatao.core.html#adatao.core.filter_expression_parser.FilterExpressionVisitor.visit_Num">[docs]</a>    <span class="k">def</span> <span class="nf">visit_Num</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Integral</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">n</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">n</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="FilterExpressionVisitor.visit_Name"><a class="viewcode-back" href="../../../adatao.core.html#adatao.core.filter_expression_parser.FilterExpressionVisitor.visit_Name">[docs]</a>    <span class="k">def</span> <span class="nf">visit_Name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="s">&#39;True&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="s">&#39;False&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ddf</span><span class="o">.</span><span class="n">colnames</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ddf</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">PyClientParserException</span><span class="p">(</span><span class="s">&#39;Unknown name: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="FilterExpressionVisitor.visit_Str"><a class="viewcode-back" href="../../../adatao.core.html#adatao.core.filter_expression_parser.FilterExpressionVisitor.visit_Str">[docs]</a>    <span class="k">def</span> <span class="nf">visit_Str</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">s</span><span class="p">)</span>
+</div>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_parse_contains_args</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">kws</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ast</span><span class="o">.</span><span class="n">Str</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">kws</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="bp">None</span>
+                <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">kws</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">kws</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">arg</span> <span class="o">==</span> <span class="s">&#39;ignore_case&#39;</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">kws</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Name</span><span class="p">)</span> \
+                            <span class="ow">and</span> <span class="n">kws</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;True&#39;</span><span class="p">,</span> <span class="s">&#39;False&#39;</span><span class="p">]:</span>
+                        <span class="k">return</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="n">kws</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="s">&#39;True&#39;</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ast</span><span class="o">.</span><span class="n">Str</span><span class="p">)</span> <span class="ow">and</span> \
+               <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ast</span><span class="o">.</span><span class="n">Name</span><span class="p">)</span> <span class="ow">and</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;True&#39;</span><span class="p">,</span> <span class="s">&#39;False&#39;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="s">&#39;True&#39;</span>
+
+        <span class="k">raise</span> <span class="n">PyClientParserException</span><span class="p">(</span><span class="s">&#39;Invalid arguments for contains()&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="FilterExpressionVisitor.visit_Call"><a class="viewcode-back" href="../../../adatao.core.html#adatao.core.filter_expression_parser.FilterExpressionVisitor.visit_Call">[docs]</a>    <span class="k">def</span> <span class="nf">visit_Call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">func</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Attribute</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">PyClientParserException</span><span class="p">(</span><span class="s">&#39;Only support a function call on a column. Offset = </span><span class="si">%d</span><span class="s">&#39;</span>
+                                          <span class="o">%</span> <span class="n">node</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">col_offset</span><span class="p">)</span>
+        <span class="n">col_name</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">id</span>
+        <span class="n">func_name</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">attr</span>
+        <span class="k">if</span> <span class="n">col_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ddf</span><span class="o">.</span><span class="n">colnames</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">PyClientParserException</span><span class="p">(</span><span class="s">&#39;Expect a column name: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">col_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">func_name</span> <span class="o">==</span> <span class="s">&#39;isnull&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ddf</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="n">func_name</span> <span class="o">==</span> <span class="s">&#39;contains&#39;</span><span class="p">:</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="n">FilterExpressionVisitor</span><span class="o">.</span><span class="n">_parse_contains_args</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">keywords</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ddf</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ddf</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ignore_case</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">PyClientParserException</span><span class="p">(</span><span class="s">&#39;Unknown function: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">func_name</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="FilterExpressionVisitor.visit_Compare"><a class="viewcode-back" href="../../../adatao.core.html#adatao.core.filter_expression_parser.FilterExpressionVisitor.visit_Compare">[docs]</a>    <span class="k">def</span> <span class="nf">visit_Compare</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">ops</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">comparators</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">PyClientParserException</span><span class="p">(</span><span class="s">&#39;Only support comparison between a column and a value. Operator = </span><span class="si">%s</span><span class="s">&#39;</span>
+                                          <span class="o">%</span> <span class="n">node</span><span class="o">.</span><span class="n">ops</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">comparators</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="n">operand_right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="n">operand_left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">operand_left</span><span class="p">,</span> <span class="n">SubsetExpression</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">PyClientParserException</span><span class="p">(</span><span class="s">&#39;Only support comparison between a column and a value. Operator = </span><span class="si">%s</span><span class="s">&#39;</span>
+                                          <span class="o">%</span> <span class="n">node</span><span class="o">.</span><span class="n">ops</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">op_type</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">ops</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">op_type</span> <span class="ow">is</span> <span class="n">ast</span><span class="o">.</span><span class="n">Gt</span><span class="p">:</span>
+            <span class="n">subset_exp</span> <span class="o">=</span> <span class="n">operand_left</span> <span class="o">&gt;</span> <span class="n">operand_right</span>
+        <span class="k">elif</span> <span class="n">op_type</span> <span class="ow">is</span> <span class="n">ast</span><span class="o">.</span><span class="n">GtE</span><span class="p">:</span>
+            <span class="n">subset_exp</span> <span class="o">=</span> <span class="n">operand_left</span> <span class="o">&gt;=</span> <span class="n">operand_right</span>
+        <span class="k">elif</span> <span class="n">op_type</span> <span class="ow">is</span> <span class="n">ast</span><span class="o">.</span><span class="n">Lt</span><span class="p">:</span>
+            <span class="n">subset_exp</span> <span class="o">=</span> <span class="n">operand_left</span> <span class="o">&lt;</span> <span class="n">operand_right</span>
+        <span class="k">elif</span> <span class="n">op_type</span> <span class="ow">is</span> <span class="n">ast</span><span class="o">.</span><span class="n">LtE</span><span class="p">:</span>
+            <span class="n">subset_exp</span> <span class="o">=</span> <span class="n">operand_left</span> <span class="o">&lt;=</span> <span class="n">operand_right</span>
+        <span class="k">elif</span> <span class="n">op_type</span> <span class="ow">is</span> <span class="n">ast</span><span class="o">.</span><span class="n">Eq</span><span class="p">:</span>
+            <span class="n">subset_exp</span> <span class="o">=</span> <span class="n">operand_left</span> <span class="o">==</span> <span class="n">operand_right</span>
+        <span class="k">elif</span> <span class="n">op_type</span> <span class="ow">is</span> <span class="n">ast</span><span class="o">.</span><span class="n">NotEq</span><span class="p">:</span>
+            <span class="n">subset_exp</span> <span class="o">=</span> <span class="n">operand_left</span> <span class="o">!=</span> <span class="n">operand_right</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">PyClientParserException</span><span class="p">(</span><span class="s">&#39;Unsupported comparison operator: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">op_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subset_exp</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="FilterExpressionVisitor.visit_UnaryOp"><a class="viewcode-back" href="../../../adatao.core.html#adatao.core.filter_expression_parser.FilterExpressionVisitor.visit_UnaryOp">[docs]</a>    <span class="k">def</span> <span class="nf">visit_UnaryOp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operand</span><span class="p">)</span>
+        <span class="n">op_type</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">op</span><span class="p">)</span>
+        <span class="n">operand</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">op_type</span> <span class="ow">is</span> <span class="n">ast</span><span class="o">.</span><span class="n">Invert</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">operand</span><span class="p">,</span> <span class="n">SubsetExpression</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">PyClientParserException</span><span class="p">(</span><span class="s">&#39;Only support invert (~) on a subset expression&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">~</span><span class="n">operand</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Unsupported unary operator: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">op_type</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="FilterExpressionVisitor.visit_BinOp"><a class="viewcode-back" href="../../../adatao.core.html#adatao.core.filter_expression_parser.FilterExpressionVisitor.visit_BinOp">[docs]</a>    <span class="k">def</span> <span class="nf">visit_BinOp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+
+        <span class="n">op_right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="n">op_left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="n">op_type</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">op</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">op_left</span><span class="p">,</span> <span class="n">SubsetExpression</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">op_right</span><span class="p">,</span> <span class="n">SubsetExpression</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="n">PyClientParserException</span><span class="p">(</span><span class="s">&#39;Only support binary operators between 2 subset expression. Operator = </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span>
+                                          <span class="n">op_type</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">op_type</span> <span class="ow">is</span> <span class="n">ast</span><span class="o">.</span><span class="n">BitAnd</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">op_left</span> <span class="o">&amp;</span> <span class="n">op_right</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">op_type</span> <span class="ow">is</span> <span class="n">ast</span><span class="o">.</span><span class="n">BitOr</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">op_left</span> <span class="o">|</span> <span class="n">op_right</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">PyClientParserException</span><span class="p">(</span><span class="s">&#39;Unsupported binary operator: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">op</span><span class="p">))</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">PyClient 0.3.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Adatao.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>
